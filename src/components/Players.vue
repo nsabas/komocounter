@@ -66,8 +66,10 @@ export default {
   },
   methods: {
     addPlayersName(player_name) {
-      this.players.push(new Player(player_name));
-      this.player_name = '';
+      if (player_name !== ''){
+        this.players.push(new Player(player_name));
+        this.player_name = '';
+      }
     },
     readyToGame(){
       if (this.players.length > 0){

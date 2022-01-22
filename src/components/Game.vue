@@ -1,4 +1,10 @@
 <template>
+  <div @click="showGridPoints" v-if="isHiddenGridPoints && isHiddenEnterPlayerStep" class="grid-points">
+    <font-awesome-icon icon="coins" /><div>points</div>
+  </div>
+  <div @click="hideGridPoints" v-if="!isHiddenGridPoints && isHiddenEnterPlayerStep" class="grid-points">
+    <font-awesome-icon icon="times" />
+  </div>
 
   <!-- get players names -->
   <Players v-if="!isHiddenEnterPlayerStep" @start-game="getPlayersList"/>
@@ -19,15 +25,21 @@
   </div>
   <!-- end -->
 
-<!--  <GridPoint :players="game.players"/>-->
+
+  <GridPoint v-if="!isHiddenGridPoints" :players="game.players"/>
 </template>
 
 <script>
 import Players from "./Players";
 import Cards from "./Cards";
 import Komo from "./Komo";
-// import GridPoint from "./GridPoint";
+import GridPoint from "./GridPoint";
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCoins, faTimes } from '@fortawesome/free-solid-svg-icons'
 
+library.add(faCoins);
+library.add(faTimes);
 export class Game {
   players;
   constructor(playersList = [], nbRound = 5) {
@@ -48,8 +60,9 @@ export default {
   components: {
     Players,
     Cards,
-    Komo
-    // GridPoint
+    Komo,
+    FontAwesomeIcon,
+    GridPoint
   },
   data() {
     return {
@@ -58,6 +71,7 @@ export default {
       isHiddenEnterPlayerStep: false,
       isHiddenStartGameStep: true,
       isHiddenEndGame: true,
+      isHiddenGridPoints: true,
       isHiddenAskKomoStep: true
     }
   },
@@ -81,6 +95,16 @@ export default {
         this.isHiddenStartGameStep = true;
         this.isHiddenEndGame = false;
       }
+    },
+    showGridPoints(){
+      this.isHiddenStartGameStep = true;
+      this.isHiddenAskKomoStep = true;
+      this.isHiddenEndGame = true;
+      this.isHiddenGridPoints = false;
+    },
+    hideGridPoints(){
+      this.isHiddenStartGameStep = false;
+      this.isHiddenGridPoints = true;
     }
   }
 
@@ -88,5 +112,10 @@ export default {
 </script>
 
 <style scoped>
+.grid-points {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
 
 </style>

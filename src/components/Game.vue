@@ -19,14 +19,14 @@
   </div>
   <!-- end -->
 
-  <GridPoint :players="game.players"/>
+<!--  <GridPoint :players="game.players"/>-->
 </template>
 
 <script>
 import Players from "./Players";
 import Cards from "./Cards";
 import Komo from "./Komo";
-import GridPoint from "./GridPoint";
+// import GridPoint from "./GridPoint";
 
 export class Game {
   players;
@@ -48,8 +48,8 @@ export default {
   components: {
     Players,
     Cards,
-    Komo,
-    GridPoint
+    Komo
+    // GridPoint
   },
   data() {
     return {

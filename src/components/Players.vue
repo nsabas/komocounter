@@ -1,21 +1,27 @@
-<template v-if="isHidden">
-  <div>
-    <h1>Enter players names :</h1>
+<template  v-if="isHidden">
+  <div id="players">
+    <h2>Enter players names :</h2>
 
-    <input type="text" placeholder="Nom" v-model="player_name">
-    <button @click="addPlayersName(player_name)" >Add</button>
+    <div>
+      <input v-on:keyup.enter="addPlayersName(player_name)" class="enter-plalyer-input" type="text" placeholder="Nom" v-model="player_name">
+      <font-awesome-icon class="add-player-btn" @click="addPlayersName(player_name)" icon="plus" />
+    </div>
     <ul>
-      <li v-for="player in players" :key="player">{{ player.name }} <button @click="players.splice(players.indexOf(player), 1)" >delete</button></li>
+      <li class="username-field" v-for="player in players" :key="player">{{ player.name }} <font-awesome-icon class="" @click="players.splice(players.indexOf(player), 1)" icon="times" /></li>
     </ul>
 
-    <button @click="readyToGame">Ready !</button>
+    <button class="btn" @click="readyToGame">Ready !</button>
   </div>
 </template>
 
 <script>
-
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {ref} from "vue";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons'
 
+library.add(faPlus);
+library.add(faTimes);
 export class Player {
   constructor(name) {
     this.name = name;
@@ -32,7 +38,7 @@ export class Player {
   }
 
   setKomo(isKomo){
-    this.komo = isKomo;
+    this.isKomo = isKomo;
   }
 
   getPoints(){
@@ -50,6 +56,9 @@ export class Player {
 
 export default {
   name: 'Players',
+  components: {
+    FontAwesomeIcon
+  },
   props: {
     isHidden: Boolean
   },
@@ -80,3 +89,24 @@ export default {
 }
 
 </script>
+
+<style>
+#players {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.username-field {
+  display: flex;
+  align-items: center;
+}
+
+.enter-plalyer-input {
+  border-radius: 20px;
+  height: 25px;
+}
+
+.add-player-btn {
+  margin-left: 10px;
+}
+</style>
